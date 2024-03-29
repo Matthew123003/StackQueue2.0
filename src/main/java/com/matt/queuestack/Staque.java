@@ -1,8 +1,10 @@
 package com.matt.queuestack;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Stack;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.IntFunction;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class Staque<T> implements Collection<T> {
 
@@ -20,37 +22,38 @@ public class Staque<T> implements Collection<T> {
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return queue.contains(o);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return queue.iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        return queue.toArray();
     }
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return null;
+        return queue.toArray(a);
     }
 
     @Override
     public boolean add(T t) {
-        return false;
+
+        return queue.add(t);
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        return queue.remove(o);
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        return new HashSet<>(queue).containsAll(c);
     }
 
     @Override
@@ -60,16 +63,59 @@ public class Staque<T> implements Collection<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        return queue.removeAll(c);
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        return queue.retainAll(c);
     }
 
     @Override
     public void clear() {
+        queue.clear();
+        temp.clear();
+    }
 
+    public Spliterator<T> spliterator(){
+        return queue.spliterator();
+    }
+
+    @Override
+    public Stream<T> stream() {
+        return queue.stream();
+    }
+
+    @Override
+    public Stream<T> parallelStream() {
+        return queue.parallelStream();
+    }
+
+    @Override
+    public void forEach(Consumer<? super T> action) {
+        queue.forEach(action);
+    }
+
+    @Override
+    public <T1> T1[] toArray(IntFunction<T1[]> generator) {
+        return queue.toArray(generator);
+    }
+
+    @Override
+    public boolean removeIf(Predicate<? super T> filter) {
+        return queue.removeIf(filter);
+    }
+
+    public boolean enqueue(T t) {
+        add(t);
+        return true;
+    }
+
+    public T dequeue() {
+        return queue.pop();
+    }
+
+    public T peek() {
+        return queue.peek();
     }
 }
