@@ -42,8 +42,14 @@ public class Staque<T> implements Collection<T> {
 
     @Override
     public boolean add(T t) {
-
-        return queue.add(t);
+        while(!queue.isEmpty()){
+            temp.push(queue.pop());
+        }
+        temp.push(t);
+        while(!temp.isEmpty()){
+            queue.push(temp.pop());
+        }
+        return true;
     }
 
     @Override
@@ -58,7 +64,14 @@ public class Staque<T> implements Collection<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        while(!queue.isEmpty()){
+            temp.push(queue.pop());
+        }
+        queue.addAll(c);
+        while(!temp.isEmpty()){
+            queue.push(temp.pop());
+        }
+        return true;
     }
 
     @Override
